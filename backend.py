@@ -54,8 +54,8 @@ def process_video(video):
     frames = []
 
     ret, frame = cap.read()
-    while ret:  # Loop through all frames
-        if ret and index % 60 == 0: # added ret condition to while loop
+    while ret:
+        if ret and index % 60 == 0: 
             frame = cv2.resize(frame, (224, 224))
             buffer = io.BytesIO()
             Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)).save(buffer, format="JPEG")
@@ -63,11 +63,11 @@ def process_video(video):
             base64_encoded = base64.b64encode(buffer.read()).decode()
             frames.append(f"data:image/jpeg;base64,{base64_encoded}")
 
-        ret, frame = cap.read()  # Read the next frame
-        index +=1 # added index to loop
+        ret, frame = cap.read()
+        index +=1
         
 
-    cap.release()  # Release the video capture object
+    cap.release() 
     
     messages.append({"role": "developer", "content": "Your personality is: " + model_personality + ""})
     messages.append({
@@ -102,7 +102,7 @@ def ask_question(question):
         except TypeError:
             pass
 
-    # append response to messages
+
     messages.append({"role": "assistant", "content": ans})
     
     print("ANSWER: ",ans)
