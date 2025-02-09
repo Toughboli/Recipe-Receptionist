@@ -18,9 +18,9 @@ def clear_uploads():
             file_path = os.path.join(root, file)
             try:
                 os.remove(file_path)
-                print(f"Deleted: {file_path}")  # Optional: Print deleted files
+                print(f"Deleted: {file_path}")
             except Exception as e:
-                print(f"Error deleting {file_path}: {e}")  # Handle errors gracefully
+                print(f"Error deleting {file_path}: {e}")
                 
 def process_input_question(input_text):
     print("asking question.")
@@ -81,10 +81,10 @@ if input_option == "File Upload":
 elif input_option == "URL":
     url = st.text_input(
         "Enter URL:",
-        key="url_input",  # Unique key
+        key="url_input",
         value=st.session_state['text_url_value']
     )
-    if st.button("Submit URL", key="submit_url"):  # Unique key
+    if st.button("Submit URL", key="submit_url"):
         if url:
             process_url(url)
             st.session_state['text_url_value'] = ""
@@ -92,14 +92,14 @@ elif input_option == "URL":
 if 'video_processed' in st.session_state and st.session_state['video_processed']:
     user_input = st.text_input(
             "Enter Question:",
-            key="question_input",  # Unique key for the question input
+            key="question_input",
             value=st.session_state['text_input_question']
         )
     ask_button = st.button("Ask", key="ask_button")
     st.write("---")
     st.write("Processed Inputs:")
     
-    if ask_button:  # Unique key for the Ask button
+    if ask_button:
         if user_input:
             processed_text = process_input_question(user_input)
             st.session_state['output_question_list'].append(processed_text)
