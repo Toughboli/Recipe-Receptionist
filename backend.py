@@ -5,11 +5,23 @@ from openai import OpenAI
 import io
 import base64 
 from PIL import Image
+import platform
 
 
 client = OpenAI(api_key = os.getenv("OPENAI_API_KEY"))
 messages = []
 model_personality = "Helpful and direct."
+
+def get_os():
+    system = platform.system()
+    if system == "Windows":
+        return "Windows"
+    elif system == "Linux":
+        return "Linux"
+    elif system == "Darwin":  # macOS
+        return "Darwin"  # Or "macOS" if you prefer
+    else:
+        return "Unknown"  # Handle other OS if needed
 
 def url_in(url,dirname,filename):
     os.system(f"you-get {url} -o {dirname} -O {filename}")
@@ -37,9 +49,15 @@ def file_in(path):
 
 
 def process_video(video):
-    os.system(f"ffmpeg -i {video} -q:a 0 -map a uploads\\audio.mp3 -y")
+    p = f"ffmpeg -i {video} -q:a 0 -map a uploads/audio.mp3 -y"
+    if get_os() == "Windows":
+        p.replace("/", "\\")
+    os.system(p)
     print("Transcribing audio...")
-    audio_file= open("uploads\\audio.mp3", "rb")
+    p = "uploads/audio.mp3"
+    if get_os() == "Windows":
+        p.replace("/", "\\")
+    audio_file= open(p, "rb")
     transcription = client.audio.transcriptions.create(
         model="whisper-1", 
         file=audio_file
