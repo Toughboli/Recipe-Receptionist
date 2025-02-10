@@ -100,3 +100,4 @@ Requirements:
 * mmfpeg installed on device
 * all python modules in ```requirements.txt```. You can run ```pip3 install -r requirements.txt``` in the root directory to download them all.
 * you **MUST** have the following evironment variable: ```OPENAI_API_KEY=<YOUR_API_KEY>```. Set this in your respective shell.
+- To run the app: ```streamlit run app.py```
